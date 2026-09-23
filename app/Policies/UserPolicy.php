@@ -24,19 +24,34 @@ class UserPolicy
     public function update(User $actor, User $user): bool
     {
         return $actor->can('users.update')
-            && (! $user->hasRole('super-admin') || $actor->hasRole('super-admin'));
+            && $this->canManage($actor, $user);
     }
 
     public function delete(User $actor, User $user): bool
     {
         return $actor->can('users.delete')
             && ! $actor->is($user)
-            && (! $user->hasRole('super-admin') || $actor->hasRole('super-admin'));
+            && $this->canManage($actor, $user);
     }
 
     public function assignRoles(User $actor, User $user): bool
     {
         return $actor->can('users.assign-roles')
-            && (! $user->hasRole('super-admin') || $actor->hasRole('super-admin'));
+            && $this->canManage($actor, $user);
+    }
+
+    private function canManage(User $actor, User $user): bool
+    {
+        if ($actor->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasRole('super-admin')) {
+            return false;
+        }
+
+        $user->loadMissing('roles.permissions');
+
+        return $user->roles->flatMap->permissions->every(fn ($permission): bool => $actor->hasPermission($permission->slug));
     }
 }
