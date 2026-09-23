@@ -1,0 +1,1 @@
+<flux:input {{ $attributes }} />

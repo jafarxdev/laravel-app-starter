@@ -1,0 +1,1 @@
+<flux:radio {{ $attributes }} />

@@ -1,0 +1,1 @@
+<flux:modal {{ $attributes }}>{{ $slot }}</flux:modal>

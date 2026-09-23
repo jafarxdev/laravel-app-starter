@@ -1,0 +1,1 @@
+<flux:dropdown {{ $attributes }}>{{ $slot }}</flux:dropdown>

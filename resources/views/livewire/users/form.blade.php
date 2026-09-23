@@ -94,22 +94,22 @@ new class extends Component {
     <div><flux:heading size="xl">{{ $userId ? 'Edit user' : 'Create user' }}</flux:heading><flux:text>Account details and role assignments.</flux:text></div>
     <form wire:submit="save" class="space-y-6 rounded-xl border border-zinc-200 p-6 dark:border-zinc-700">
         <div class="grid gap-5 sm:grid-cols-2">
-            <flux:input wire:model="name" label="Name" required autofocus autocomplete="name" />
-            <flux:input wire:model="email" label="Email address" type="email" required autocomplete="email" />
-            <flux:input wire:model="password" label="Password" type="password" autocomplete="new-password" :description="$userId ? 'Leave blank to keep the current password.' : 'At least 8 characters.'" />
-            <flux:input wire:model="password_confirmation" label="Confirm password" type="password" autocomplete="new-password" />
+            <x-ui.input wire:model="name" label="Name" required autofocus autocomplete="name" />
+            <x-ui.input wire:model="email" label="Email address" type="email" required autocomplete="email" />
+            <x-ui.input wire:model="password" label="Password" type="password" autocomplete="new-password" :description="$userId ? 'Leave blank to keep the current password.' : 'At least 8 characters.'" />
+            <x-ui.input wire:model="password_confirmation" label="Confirm password" type="password" autocomplete="new-password" />
         </div>
-        <flux:select wire:model="status" label="Status" :disabled="$userId === auth()->id()"><option value="active">Active</option><option value="inactive">Inactive</option></flux:select>
+        <x-ui.select wire:model="status" label="Status" :disabled="$userId === auth()->id()"><option value="active">Active</option><option value="inactive">Inactive</option></x-ui.select>
         @can('users.assign-roles')
             <fieldset class="space-y-3"><legend class="font-medium">Roles</legend>
                 @foreach($roles as $role)
                     @if($role->slug !== 'super-admin' || auth()->user()->hasRole('super-admin'))
-                        <flux:checkbox wire:model="selectedRoles" :value="(string) $role->id" :label="$role->name" :disabled="$userId === auth()->id()" />
+                        <x-ui.checkbox wire:model="selectedRoles" :value="(string) $role->id" :label="$role->name" :disabled="$userId === auth()->id()" />
                     @endif
                 @endforeach
                 <flux:error name="selectedRoles" /><flux:error name="selectedRoles.*" />
             </fieldset>
         @endcan
-        <div class="flex justify-end gap-3"><flux:button :href="route('users.index')" wire:navigate>Cancel</flux:button><flux:button type="submit" variant="primary" wire:loading.attr="disabled">Save user</flux:button></div>
+        <div class="flex justify-end gap-3"><x-ui.button :href="route('users.index')" wire:navigate>Cancel</x-ui.button><x-ui.button type="submit" variant="primary" wire:loading.attr="disabled">Save user</x-ui.button></div>
     </form>
 </div>

@@ -1,0 +1,1 @@
+<div aria-hidden="true" {{ $attributes->class('h-5 rounded-md bg-zinc-200 motion-safe:animate-pulse dark:bg-zinc-800') }}></div>

@@ -1,0 +1,1 @@
+<th scope="col" {{ $attributes->class('bg-zinc-50 px-4 py-3 font-medium text-zinc-600 dark:bg-zinc-900 dark:text-zinc-300') }}>{{ $slot }}</th>

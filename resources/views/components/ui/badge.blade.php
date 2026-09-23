@@ -1,0 +1,1 @@
+<flux:badge {{ $attributes }}>{{ $slot }}</flux:badge>
