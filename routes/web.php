@@ -7,8 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
+Volt::route('dashboard', 'dashboard')
+    ->middleware(['auth', 'can:dashboard.view'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
