@@ -85,6 +85,7 @@ new class extends Component {
             $role->fill(collect($data)->only(['name', 'slug', 'description'])->all())->save();
             if ($current !== $selected) {
                 $role->permissions()->sync($selected);
+                \App\Models\AuditLog::record('role.permissions-assigned', $role, ['permission_ids' => $current], ['permission_ids' => $selected]);
             }
         });
         auth()->user()->unsetRelation('roles');

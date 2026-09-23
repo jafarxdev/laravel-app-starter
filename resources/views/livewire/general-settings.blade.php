@@ -31,9 +31,11 @@ new class extends Component {
         ])['settings'];
 
         DB::transaction(function () use ($validated): void {
+            $old = Setting::values();
             foreach ($validated as $key => $value) {
                 Setting::updateOrCreate(['key' => $key], ['value' => $value]);
             }
+            \App\Models\AuditLog::record('settings.updated', old: $old, new: $validated);
         });
         app()->forgetInstance('starter.settings');
         session()->flash('success', 'Settings updated.');

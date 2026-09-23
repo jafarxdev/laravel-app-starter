@@ -111,7 +111,11 @@ class User extends Authenticatable // implements MustVerifyEmail
     /** @param list<int|string> $roleIds */
     public function syncRoles(array $roleIds): void
     {
+        $oldIds = $this->roles()->pluck('roles.id')->all();
         $this->roles()->sync($roleIds);
+        if (auth()->check()) {
+            AuditLog::record('user.roles-assigned', $this, ['role_ids' => $oldIds], ['role_ids' => $roleIds]);
+        }
         $this->unsetRelation('roles');
 
         if (auth()->user()?->is($this)) {

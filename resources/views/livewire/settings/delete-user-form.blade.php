@@ -22,6 +22,7 @@ new class extends Component {
         DB::transaction(function () use ($protection, $logout): void {
             $user = Auth::user();
             $protection->handle($user, $user->status, [], deleting: true, selfService: true);
+            \App\Models\AuditLog::record('user.deleted', $user, $user->getAttributes());
             $logout();
             $user->delete();
         });

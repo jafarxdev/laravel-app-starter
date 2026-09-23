@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\Setting;
 use App\Models\User;
+use App\Observers\RecordAdministrativeChanges;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        foreach ([User::class, Role::class, Permission::class] as $model) {
+            $model::observe(RecordAdministrativeChanges::class);
+        }
+
         View::composer(['components.app-logo', 'partials.head', 'components.layouts.app.sidebar', 'components.layouts.app'], function ($view): void {
             $view->with('appSettings', app('starter.settings'));
         });
