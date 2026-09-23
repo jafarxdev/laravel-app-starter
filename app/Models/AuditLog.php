@@ -36,7 +36,7 @@ class AuditLog extends Model
     {
         return Arr::only($values, [
             'name', 'email', 'status', 'slug', 'module', 'description', 'is_system',
-            'role_ids', 'permission_ids', 'password_changed',
+            'name_fa', 'description_fa', 'role_ids', 'permission_ids', 'password_changed',
             ...array_keys(Setting::defaults()),
         ]);
     }

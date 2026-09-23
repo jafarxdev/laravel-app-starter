@@ -21,7 +21,7 @@ class EnsureUserIsActive
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('login')->with('error', 'Your account is inactive. Contact an administrator.');
+            return redirect()->route('login')->with('error', __('Your account is inactive. Contact an administrator.'));
         }
 
         return $next($request);

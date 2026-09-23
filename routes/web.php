@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+
+Route::post('locale', LocaleController::class)->name('locale.update');
 
 Route::get('/', function () {
     return view('welcome');

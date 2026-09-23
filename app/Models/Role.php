@@ -10,11 +10,21 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description', 'is_system'];
+    protected $fillable = ['name', 'slug', 'description', 'name_fa', 'description_fa', 'is_system'];
 
     protected function casts(): array
     {
         return ['is_system' => 'boolean'];
+    }
+
+    public function localizedName(): string
+    {
+        return app()->isLocale('fa') ? ($this->name_fa ?: __($this->name)) : $this->name;
+    }
+
+    public function localizedDescription(): string
+    {
+        return app()->isLocale('fa') ? ($this->description_fa ?: __($this->description ?? '')) : ($this->description ?? '');
     }
 
     public function users(): BelongsToMany

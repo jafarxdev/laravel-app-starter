@@ -1,2 +1,2 @@
 @props(['label', 'placeholder' => 'All'])
-<x-ui.select :label="$label" {{ $attributes }}><option value="">{{ $placeholder }}</option>{{ $slot }}</x-ui.select>
+<x-ui.select :label="__($label)" {{ $attributes }}><option value="">{{ __($placeholder) }}</option>{{ $slot }}</x-ui.select>

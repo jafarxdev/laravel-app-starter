@@ -23,7 +23,7 @@ class ProtectUserAccess
 
         if (! $selfService && auth()->id() === $user->id) {
             if ($deleting || $status !== $current->status || $currentIds !== $nextIds) {
-                throw ValidationException::withMessages(['status' => 'You cannot delete, deactivate or change roles on your own account here.']);
+                throw ValidationException::withMessages(['status' => __('You cannot delete, deactivate or change roles on your own account here.')]);
             }
         }
 
@@ -31,7 +31,7 @@ class ProtectUserAccess
             $removesAccess = $deleting || $status !== 'active' || ! in_array($superRole->id, $nextIds, true);
 
             if ($removesAccess && ! $superRole->users()->where('status', 'active')->where('users.id', '!=', $user->id)->exists()) {
-                throw ValidationException::withMessages(['status' => 'The last active Super Admin must be preserved.']);
+                throw ValidationException::withMessages(['status' => __('The last active Super Admin must be preserved.')]);
             }
         }
     }

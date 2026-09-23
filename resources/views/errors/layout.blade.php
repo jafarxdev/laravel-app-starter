@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->isLocale('fa') ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title') · {{ config('app.name') }}</title>
@@ -12,5 +12,5 @@
         @media(prefers-color-scheme:dark){:root{background:#09090b;color:#fafafa}main{background:#18181b;border-color:#3f3f46}p{color:#a1a1aa}.code{color:#a5b4fc}}
     </style>
 </head>
-<body><main><div class="code">@yield('code')</div><h1>@yield('title')</h1><p>@yield('message')</p><a href="{{ route('login') }}">Return to sign in</a></main></body>
+<body><main><div class="code">@yield('code')</div><h1>@yield('title')</h1><p>@yield('message')</p><a href="{{ route('login') }}">{{ __('Return to sign in') }}</a></main></body>
 </html>

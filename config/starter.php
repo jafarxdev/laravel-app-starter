@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'locales' => ['en' => 'English', 'fa' => 'فارسی / دری'],
+
     'permissions' => [
         'dashboard.view',
         'users.view', 'users.create', 'users.update', 'users.delete', 'users.assign-roles',

@@ -24,12 +24,12 @@ new class extends Component {
 
 <div class="mx-auto max-w-3xl space-y-6">
     <div class="flex items-center justify-between gap-4"><flux:heading size="xl">{{ $user->name }}</flux:heading>
-        @can('update', $user)<x-ui.button :href="route('users.edit', $user)" wire:navigate>Edit user</x-ui.button>@endcan
+        @can('update', $user)<x-ui.button :href="route('users.edit', $user)" wire:navigate>{{ __('Edit user') }}</x-ui.button>@endcan
     </div>
     <dl class="grid gap-6 rounded-xl border border-zinc-200 p-6 sm:grid-cols-2 dark:border-zinc-700">
-        @foreach(['Email' => $user->email, 'Status' => ucfirst($user->status), 'Roles' => $user->roles->pluck('name')->join(', ') ?: 'No roles', 'Created' => App\Models\Setting::formatDate($user->created_at)] as $label => $value)
-            <div><dt class="text-sm text-zinc-500">{{ $label }}</dt><dd class="mt-1 font-medium">{{ $value }}</dd></div>
+        @foreach(['Email' => $user->email, 'Status' => __(ucfirst($user->status)), 'Roles' => $user->roles->map(fn ($role) => $role->localizedName())->join(', ') ?: __('No roles'), 'Created' => App\Models\Setting::formatDate($user->created_at)] as $label => $value)
+            <div><dt class="text-sm text-zinc-500">{{ __($label) }}</dt><dd class="mt-1 font-medium">{{ $value }}</dd></div>
         @endforeach
     </dl>
-    <x-ui.button :href="route('users.index')" wire:navigate>Back to users</x-ui.button>
+    <x-ui.button :href="route('users.index')" wire:navigate>{{ __('Back to users') }}</x-ui.button>
 </div>

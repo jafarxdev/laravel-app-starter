@@ -19,7 +19,10 @@ new class extends Component {
     {
         Gate::authorize('settings.update');
         $validated = $this->validate([
-            'settings' => ['array:application_name,short_name,organization_name,contact_email,contact_phone,logo_path,timezone,date_format'],
+            'settings' => ['array:application_name,short_name,organization_name,application_name_fa,short_name_fa,organization_name_fa,contact_email,contact_phone,logo_path,timezone,date_format'],
+            'settings.application_name_fa' => ['nullable', 'string', 'max:100'],
+            'settings.short_name_fa' => ['nullable', 'string', 'max:12'],
+            'settings.organization_name_fa' => ['nullable', 'string', 'max:150'],
             'settings.application_name' => ['required', 'string', 'max:100'],
             'settings.short_name' => ['required', 'string', 'max:12'],
             'settings.organization_name' => ['required', 'string', 'max:150'],
@@ -38,7 +41,7 @@ new class extends Component {
             \App\Models\AuditLog::record('settings.updated', old: $old, new: $validated);
         });
         app()->forgetInstance('starter.settings');
-        session()->flash('success', 'Settings updated.');
+        session()->flash('success', __('Settings updated.'));
     }
 
     public function with(): array
@@ -50,26 +53,29 @@ new class extends Component {
 }; ?>
 
 <div class="mx-auto max-w-4xl space-y-6">
-    <x-ui.page-header title="General settings" description="Customize the identity and presentation of your application." />
+    <x-ui.page-header title="{{ __('General settings') }}" description="{{ __('Customize the identity and presentation of your application.') }}" />
     <x-ui.flash-messages />
     <form wire:submit="save" class="space-y-6">
-        <x-ui.form-section title="Application identity" description="These values appear in the application layout.">
+        <x-ui.form-section title="{{ __('Application identity') }}" description="{{ __('These values appear in the application layout.') }}">
             <div class="grid gap-5 sm:grid-cols-2">
-                <x-ui.input wire:model="settings.application_name" label="Application name" required />
-                <x-ui.input wire:model="settings.short_name" label="Short name" required />
-                <x-ui.input wire:model="settings.organization_name" label="Organization name" required />
-                <x-ui.input wire:model="settings.logo_path" label="Logo path (optional)" placeholder="images/logo.png" description="Relative path to an existing image in the public folder." />
+                <x-ui.input wire:model="settings.application_name" label="{{ __('Application name') }}" required />
+                <x-ui.input wire:model="settings.short_name" label="{{ __('Short name') }}" required />
+                <x-ui.input wire:model="settings.organization_name" label="{{ __('Organization name') }}" required />
+                <x-ui.input wire:model="settings.application_name_fa" label="{{ __('Application name (Persian / Dari)') }}" dir="rtl" description="{{ __('Optional. Falls back to the original text when empty.') }}" />
+                <x-ui.input wire:model="settings.short_name_fa" label="{{ __('Short name (Persian / Dari)') }}" dir="rtl" />
+                <x-ui.input wire:model="settings.organization_name_fa" label="{{ __('Organization name (Persian / Dari)') }}" dir="rtl" />
+                <x-ui.input wire:model="settings.logo_path" label="{{ __('Logo path (optional)') }}" placeholder="images/logo.png" description="{{ __('Relative path to an existing image in the public folder.') }}" />
             </div>
         </x-ui.form-section>
-        <x-ui.form-section title="Contact and regional preferences">
+        <x-ui.form-section title="{{ __('Contact and regional preferences') }}">
             <div class="grid gap-5 sm:grid-cols-2">
-                <x-ui.input wire:model="settings.contact_email" label="Contact email" type="email" />
-                <x-ui.input wire:model="settings.contact_phone" label="Contact phone" type="tel" />
-                <x-ui.select wire:model="settings.timezone" label="Display timezone">@foreach($timezones as $timezone)<option value="{{ $timezone }}">{{ $timezone }}</option>@endforeach</x-ui.select>
-                <x-ui.select wire:model="settings.date_format" label="Date format">@foreach(['Y-m-d', 'd/m/Y', 'm/d/Y', 'd M Y'] as $format)<option value="{{ $format }}">{{ $format }}</option>@endforeach</x-ui.select>
+                <x-ui.input wire:model="settings.contact_email" label="{{ __('Contact email') }}" type="email" />
+                <x-ui.input wire:model="settings.contact_phone" label="{{ __('Contact phone') }}" type="tel" />
+                <x-ui.select wire:model="settings.timezone" label="{{ __('Display timezone') }}">@foreach($timezones as $timezone)<option value="{{ $timezone }}">{{ $timezone }}</option>@endforeach</x-ui.select>
+                <x-ui.select wire:model="settings.date_format" label="{{ __('Date format') }}">@foreach(['Y-m-d', 'd/m/Y', 'm/d/Y', 'd M Y'] as $format)<option value="{{ $format }}">{{ $format }}</option>@endforeach</x-ui.select>
             </div>
         </x-ui.form-section>
         <x-ui.input-error name="settings" />
-        @can('settings.update')<div class="flex justify-end"><x-ui.button type="submit" variant="primary" wire:loading.attr="disabled">Save settings</x-ui.button></div>@else<x-ui.alert>You have read-only access to these settings.</x-ui.alert>@endcan
+        @can('settings.update')<div class="flex justify-end"><x-ui.button type="submit" variant="primary" wire:loading.attr="disabled">{{ __('Save settings') }}</x-ui.button></div>@else<x-ui.alert>{{ __('You have read-only access to these settings.') }}</x-ui.alert>@endcan
     </form>
 </div>

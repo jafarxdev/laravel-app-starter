@@ -63,3 +63,17 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+html[dir="rtl"] {
+    font-family: Tahoma, "Segoe UI", sans-serif;
+}
+
+html[dir="rtl"] .tracking-tight,
+html[dir="rtl"] .tracking-widest {
+    letter-spacing: normal;
+}
+
+input[type="email"], input[type="tel"], input[name="slug"], pre {
+    direction: ltr;
+    text-align: start;
+}

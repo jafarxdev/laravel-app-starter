@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         View::composer(['components.app-logo', 'partials.head', 'components.layouts.app.sidebar', 'components.layouts.app'], function ($view): void {
-            $view->with('appSettings', app('starter.settings'));
+            $view->with('appSettings', Setting::localizedValues());
         });
 
         Gate::before(function (User $user, string $ability): ?bool {
