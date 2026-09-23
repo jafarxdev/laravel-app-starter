@@ -27,7 +27,7 @@ new class extends Component {
         @can('update', $user)<x-ui.button :href="route('users.edit', $user)" wire:navigate>Edit user</x-ui.button>@endcan
     </div>
     <dl class="grid gap-6 rounded-xl border border-zinc-200 p-6 sm:grid-cols-2 dark:border-zinc-700">
-        @foreach(['Email' => $user->email, 'Status' => ucfirst($user->status), 'Roles' => $user->roles->pluck('name')->join(', ') ?: 'No roles', 'Created' => $user->created_at->format('Y-m-d')] as $label => $value)
+        @foreach(['Email' => $user->email, 'Status' => ucfirst($user->status), 'Roles' => $user->roles->pluck('name')->join(', ') ?: 'No roles', 'Created' => App\Models\Setting::formatDate($user->created_at)] as $label => $value)
             <div><dt class="text-sm text-zinc-500">{{ $label }}</dt><dd class="mt-1 font-medium">{{ $value }}</dd></div>
         @endforeach
     </dl>

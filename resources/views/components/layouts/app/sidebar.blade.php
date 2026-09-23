@@ -24,7 +24,7 @@
 
         <flux:header class="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" aria-label="Open navigation" />
-            <span class="hidden text-sm font-medium text-zinc-500 sm:block">{{ config('app.name') }}</span>
+            <span class="hidden text-sm font-medium text-zinc-500 sm:block">{{ $appSettings['application_name'] }}</span>
             <flux:spacer />
             <flux:dropdown position="bottom" align="end">
                 <flux:profile :name="auth()->user()->name" :initials="auth()->user()->initials()" icon-trailing="chevron-down" />

@@ -6,7 +6,7 @@
                 <span aria-current="page">{{ $title ?? str(request()->route()?->getName() ?? 'Workspace')->replace(['.', '-'], ' ')->headline() }}</span>
             </nav>
             <div class="flex-1">{{ $slot }}</div>
-            <footer class="flex flex-wrap justify-between gap-2 border-t border-zinc-200 pt-5 text-xs text-zinc-500 dark:border-zinc-800"><span>{{ config('app.name') }}</span><span>&copy; {{ now()->year }} · All rights reserved</span></footer>
+            <footer class="flex flex-wrap justify-between gap-2 border-t border-zinc-200 pt-5 text-xs text-zinc-500 dark:border-zinc-800"><span>{{ $appSettings['application_name'] }}</span><span>&copy; {{ now()->year }} · All rights reserved</span></footer>
         </div>
     </flux:main>
 </x-layouts.app.sidebar>
