@@ -2,13 +2,13 @@
 
 use Livewire\Volt\Volt;
 
-test('registration screen can be rendered', function () {
+test('public registration screen is disabled', function () {
     $response = $this->get('/register');
 
-    $response->assertStatus(200);
+    $response->assertNotFound();
 });
 
-test('new users can register', function () {
+test('direct registration action is disabled', function () {
     $response = Volt::test('auth.register')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')
@@ -16,9 +16,8 @@ test('new users can register', function () {
         ->set('password_confirmation', 'password')
         ->call('register');
 
-    $response
-        ->assertHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+    $response->assertNotFound();
 
-    $this->assertAuthenticated();
+    $this->assertGuest();
+    $this->assertDatabaseMissing('users', ['email' => 'test@example.com']);
 });
