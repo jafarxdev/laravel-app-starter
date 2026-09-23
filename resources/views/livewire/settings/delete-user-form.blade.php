@@ -1,6 +1,8 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use App\Actions\ProtectUserAccess;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Component;
 
@@ -10,13 +12,19 @@ new class extends Component {
     /**
      * Delete the currently authenticated user.
      */
-    public function deleteUser(Logout $logout): void
+    public function deleteUser(Logout $logout, ProtectUserAccess $protection): void
     {
         $this->validate([
             'password' => ['required', 'string', 'current_password'],
         ]);
 
-        tap(Auth::user(), $logout(...))->delete();
+        abort_unless(Auth::check(), 403);
+        DB::transaction(function () use ($protection, $logout): void {
+            $user = Auth::user();
+            $protection->handle($user, $user->status, [], deleting: true, selfService: true);
+            $logout();
+            $user->delete();
+        });
 
         $this->redirect('/', navigate: true);
     }
@@ -45,6 +53,7 @@ new class extends Component {
             </div>
 
             <flux:input wire:model="password" id="password" label="{{ __('Password') }}" type="password" name="password" />
+            <flux:error name="status" />
 
             <div class="flex justify-end space-x-2">
                 <flux:modal.close>
