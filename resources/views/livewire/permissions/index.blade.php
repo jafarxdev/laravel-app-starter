@@ -122,7 +122,7 @@ new class extends Component {
 
 <div class="space-y-6">
     <div class="flex flex-wrap items-center justify-between gap-4"><div><flux:heading size="xl">Permissions</flux:heading><flux:text>Define application capabilities using module.action names.</flux:text></div>@can('create', App\Models\Permission::class)<x-ui.button variant="primary" wire:click="create">Create permission</x-ui.button>@endcan</div>
-    @if(session('success'))<flux:callout variant="success">{{ session('success') }}</flux:callout>@endif
+    <x-ui.flash-messages />
     <div class="grid items-end gap-3 sm:grid-cols-3">
         <x-ui.input wire:model.live.debounce.300ms="search" label="Search permissions" placeholder="Name or slug" />
         <x-ui.select wire:model.live="moduleFilter" label="Module"><option value="">All modules</option>@foreach($modules as $moduleName)<option value="{{ $moduleName }}">{{ $moduleName }}</option>@endforeach</x-ui.select>

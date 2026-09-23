@@ -51,7 +51,7 @@ new class extends Component {
 
 <div class="mx-auto max-w-4xl space-y-6">
     <x-ui.page-header title="General settings" description="Customize the identity and presentation of your application." />
-    @if(session('success'))<x-ui.alert type="success">{{ session('success') }}</x-ui.alert>@endif
+    <x-ui.flash-messages />
     <form wire:submit="save" class="space-y-6">
         <x-ui.form-section title="Application identity" description="These values appear in the application layout.">
             <div class="grid gap-5 sm:grid-cols-2">

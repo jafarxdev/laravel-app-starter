@@ -5,7 +5,7 @@
         <main class="flex min-h-svh items-center justify-center p-5 sm:p-10">
             <div class="w-full max-w-md space-y-8">
                 <a href="{{ route('home') }}" class="flex items-center justify-center gap-3" wire:navigate><x-app-logo /></a>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8 dark:border-zinc-800 dark:bg-zinc-900">{{ $slot }}</div>
+                <div class="space-y-5 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"><x-ui.flash-messages />{{ $slot }}</div>
                 <p class="text-center text-xs text-zinc-500">Secure access to your workspace</p>
             </div>
         </main>

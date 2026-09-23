@@ -132,7 +132,7 @@ new class extends Component {
 
 <div class="space-y-6">
     <div class="flex flex-wrap items-center justify-between gap-4"><div><flux:heading size="xl">Roles</flux:heading><flux:text>Group permissions into reusable responsibilities.</flux:text></div>@can('create', App\Models\Role::class)<x-ui.button variant="primary" wire:click="create">Create role</x-ui.button>@endcan</div>
-    @if(session('success'))<flux:callout variant="success">{{ session('success') }}</flux:callout>@endif
+    <x-ui.flash-messages />
     <x-ui.input wire:model.live.debounce.300ms="search" label="Search roles" placeholder="Name or slug" class="max-w-md" />
     <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-700"><table class="w-full text-left text-sm">
         <thead class="bg-zinc-50 dark:bg-zinc-900"><tr>@foreach(['Role', 'Permissions', 'Users', 'Actions'] as $heading)<th scope="col" class="px-4 py-3">{{ $heading }}</th>@endforeach</tr></thead>

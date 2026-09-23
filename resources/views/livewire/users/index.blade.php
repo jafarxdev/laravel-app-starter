@@ -94,7 +94,7 @@ new class extends Component {
         <div><flux:heading size="xl">Users</flux:heading><flux:text>Manage accounts and access to your application.</flux:text></div>
         @can('create', App\Models\User::class)<x-ui.button variant="primary" :href="route('users.create')" wire:navigate>Create user</x-ui.button>@endcan
     </div>
-    @if(session('success'))<flux:callout variant="success">{{ session('success') }}</flux:callout>@endif
+    <x-ui.flash-messages />
     <flux:error name="status" />
     <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <x-ui.input wire:model.live.debounce.300ms="search" label="Search users" placeholder="Name or email" />

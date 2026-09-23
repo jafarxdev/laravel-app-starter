@@ -25,6 +25,7 @@ new class extends Component {
 }; ?>
 
 <div class="space-y-6">
+    <x-ui.flash-messages />
     <x-ui.page-header title="Dashboard" description="An overview of your workspace and access." />
     <section class="relative overflow-hidden rounded-2xl bg-indigo-600 p-6 text-white sm:p-8">
         <div class="max-w-2xl space-y-3"><p class="text-xs font-medium uppercase tracking-widest text-indigo-200">Welcome back</p><h2 class="text-2xl font-semibold tracking-tight">{{ $currentUser->name }}</h2><p class="text-sm text-indigo-100">Everything you need to manage your workspace, in one place.</p>
