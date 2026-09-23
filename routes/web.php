@@ -12,6 +12,7 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    Volt::route('permissions', 'permissions.index')->middleware('can:permissions.view')->name('permissions.index');
     Volt::route('roles', 'roles.index')->middleware('can:roles.view')->name('roles.index');
     Volt::route('users', 'users.index')->middleware('can:users.view')->name('users.index');
     Volt::route('users/create', 'users.form')->middleware('can:users.create')->name('users.create');
